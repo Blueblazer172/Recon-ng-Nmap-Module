@@ -57,9 +57,15 @@ class Module(BaseModule):
                 # Start the process to run the command
                 proc = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         
-                # Print the output to the screen
                 for line in proc.stdout:
-                    self.output(line)
+                    # if flag -O for OS Scan in nmap is set the 
+                    # line output will be reduced to only the line
+                    # it found a OS containing CPE
+                    if str('-O') in self.options['flags']:
+                        if str('CPE') in line.decode('UTF-8'):
+                            self.output(line)
+                    else:
+                        self.output(line)
 
                 # Alert the user that the scan for the current ip address has finished
                 self.alert("Scan for " + host + " finished.")
