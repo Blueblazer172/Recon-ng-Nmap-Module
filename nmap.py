@@ -8,6 +8,7 @@ class Module(BaseModule):
     meta = {
         'name': 'Network Mapper (Nmap)',
         'author': 'Nihaal Prasad',
+        'version': 1.0,
         'description': 'Uses the network mapper (nmap) to probe known hosts one at a time for open ports and protocols.',
         'comments': (
             'Only hosts with known ip addresses will be probed.',
@@ -36,7 +37,7 @@ class Module(BaseModule):
                 service = service.get('name')
 
                 # Add the port to the ports table
-                self.add_ports(ip_address=ip, host=host, port=portid, protocol=service)
+                self.insert_ports(ip_address=ip, host=host, port=portid, protocol=service)
 
         # Delete the xml file
         proc = subprocess.Popen(shlex.split("sudo rm " + f))
